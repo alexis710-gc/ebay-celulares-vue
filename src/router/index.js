@@ -1,18 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import PhoneDetailView from "../views/PhoneDetailView.vue";
-
+import HomePage from "../pages/HomePage.vue";
+import PhoneDetailPage from "../pages/PhoneDetailPage.vue";
 
 const routes = [
     {
         path: '/',
         name: 'home',
-        component: HomeView
+        component: HomePage
     },
     {
         path: '/celular/:id',
         name: 'phone-detail',
-        component: PhoneDetailView
+        component: PhoneDetailPage
     }
 ]
 
