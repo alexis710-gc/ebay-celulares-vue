@@ -142,7 +142,7 @@
 import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { findProductById } from 'src/data/products'
+import { findProductById } from '../data/products'
 
 const props = defineProps({
   id: {

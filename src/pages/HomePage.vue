@@ -74,14 +74,14 @@
 import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import Navbar from 'src/components/Navbar.vue'
-import SidebarFilters from 'src/components/SidebarFilters.vue'
-import ProductCard from 'src/components/ProductCard.vue'
+import Navbar from '../components/Navbar.vue'
+import SidebarFilters from '../components/SidebarFilters.vue'
+import ProductCard from '../components/ProductCard.vue'
 
 const $q = useQuasar()
 const router = useRouter()
 
-import { products as catalog } from 'src/data/products'
+import { products as catalog } from '../data/products'
 
 const products = ref(catalog)
 
