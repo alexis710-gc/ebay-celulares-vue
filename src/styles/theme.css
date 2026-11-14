@@ -1,0 +1,56 @@
+:root {
+  --volcan: #C62828;
+  --volcan-oscuro: #4A1214;
+  --coral: #FF7A59;
+  --ambar: #FFB547;
+  --crema: #FFF7F2;
+  --rosa: #FDECEC;
+  --tinta: #2B1416;
+  --borde: #F0D9D2;
+  --radio: 18px;
+}
+
+body {
+  font-family: 'Nunito Variable', system-ui, sans-serif;
+  color: var(--tinta);
+}
+
+body.body--light {
+  background: var(--crema);
+}
+
+h1, h2, h3, h4, h5, h6,
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6,
+.font-display {
+  font-family: 'Fraunces Variable', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Todo menos cuadrado */
+.q-btn,
+.q-btn--rectangle {
+  border-radius: 999px;
+  font-weight: 700;
+}
+.q-card {
+  border-radius: var(--radio);
+}
+.q-field--outlined .q-field__control {
+  border-radius: 14px;
+}
+.q-chip,
+.q-badge {
+  border-radius: 999px;
+}
+.q-tab-panels,
+.q-menu {
+  border-radius: 14px;
+}
+
+.q-checkbox__bg {
+  border-radius: 7px;
+}
+.q-toggle__track {
+  border-radius: 999px;
+}
