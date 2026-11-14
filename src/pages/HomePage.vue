@@ -38,6 +38,10 @@
           </div>
         </div>
 
+        <div v-if="loading" class="flex flex-center q-pa-xl">
+          <q-spinner color="primary" size="48px" />
+          </div>
+          
         <div v-if="paginatedProducts.length" class="row q-col-gutter-md">
           <div
             v-for="p in paginatedProducts"
@@ -71,7 +75,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import {ref, computed, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import Navbar from '../components/Navbar.vue'
@@ -81,18 +85,20 @@ import ProductCard from '../components/ProductCard.vue'
 const $q = useQuasar()
 const router = useRouter()
 
-import { products as catalog } from '../data/products'
+import {getAds} from '../services/ads'
 
-const products = ref(catalog)
+const products = ref ([])
+const loading = ref (true)
 
 const PER_PAGE = 8
 
 const brandOptions = computed(() => [...new Set(products.value.map((p) => p.brand))].sort())
 const storageOptions = computed(() => [...new Set(products.value.map((p) => p.storage))].sort((a, b) => a - b))
-const priceLimits = computed(() => ({
-  min: 0,
-  max: Math.ceil(Math.max(...products.value.map((p) => p.price)) / 100) * 100
-}))
+const priceLimits = computed (()=> {
+  const prices = products.value.map((p)=>p.price)
+  const max= prices.length ? Math.ceil(Math.max(...prices)/100)*100: 1000
+  return { min: 0, max}
+})
 
 const createDefaultFilters = () => ({
   brands: [],
@@ -172,4 +178,16 @@ function addToCart (product) {
     timeout: 1800
   })
 }
+
+onMounted (async () =>{
+  try {
+    products.value = await getAds ()
+    resetFilters()
+  } catch (error){
+    console.error(error)
+    $q.notify ({ type: 'negative', message: 'No se pudieron cargar los anuncios', position: 'top-right' })
+  } finally {
+    loading.value = false
+  }
+})
 </script>
