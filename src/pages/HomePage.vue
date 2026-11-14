@@ -42,7 +42,7 @@
           <q-spinner color="primary" size="48px" />
           </div>
           
-        <div v-if="paginatedProducts.length" class="row q-col-gutter-md">
+        <div v-else-if="paginatedProducts.length" class="row q-col-gutter-md">
           <div
             v-for="p in paginatedProducts"
             :key="p.id"

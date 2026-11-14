@@ -13,7 +13,10 @@
 
     <q-page-container>
       <q-page class="q-pa-md">
-        <div v-if="product" class="detail-wrapper">
+        <div v-if="loading" class="flex felx-center q-pa-xl">
+          <q-spinner color="primary" size="48px"/>
+          </div>
+          <div v-else-if="product" class="detail-wrapper">
           <q-breadcrumbs class="q-mb-md" active-color="primary">
             <q-breadcrumbs-el label="Inicio" to="/" icon="home" />
             <q-breadcrumbs-el :label="product.brand" />
@@ -142,8 +145,7 @@
 import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { findProductById } from '../data/products'
-
+import {getAdById} from '../services/ads'
 const props = defineProps({
   id: {
     type: [String, Number],
@@ -154,14 +156,32 @@ const props = defineProps({
 const $q = useQuasar()
 const router = useRouter()
 
-const product = computed(() => findProductById(props.id))
+const product = ref(null)
+const loading = ref(true)
+
+async function loadProduct(id) {
+  loading.value = true
+  try{
+    product.value = await getAdById(id)
+  } catch(error){
+    console.error(error)
+    product.value=null
+  }finally{
+    loading.value=false
+  }
+  
+}
+
+
+
 const quantity = ref(1)
 const tab = ref('description')
 
-watch(() => props.id, () => {
+watch(() => props.id, (id) => {
   quantity.value = 1
   tab.value = 'description'
-})
+  loadProduct(id)
+},{immediate: true})
 
 const quantityOptions = computed(() =>
   Array.from({ length: Math.min(product.value?.stock || 0, 10) }, (_, i) => i + 1)
